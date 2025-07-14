@@ -1,14 +1,23 @@
 class Solution {
     public int rob(int[] nums) {
-        if(nums.length == 1) return nums[0];
-        int dp[]= new int[nums.length];
-        dp[0]= nums[0];
-        dp[1]= Math.max(nums[0], nums[1]);
+        int dp[] = new int[nums.length];
+        for(int i=0; i<dp.length ; i++) {
+            dp[i] = -1;
+        }
 
-    for(int i=2; i<dp.length; i++){
-        dp[i] = Math.max(nums[i]+ dp[i-2],dp[i-1]);
+       return  solve(dp, 0, nums);
+        
     }
 
-    return dp[dp.length-1];
+    static int solve(int dp[], int ind,int[] nums){
+        if(ind >= dp.length) return 0;
+
+        if(dp[ind] != -1){
+          return  dp[ind];
+        }else{
+            int take = nums[ind]+  solve(dp, ind+2, nums);
+            int nt= solve(dp,ind+1, nums);
+            return dp[ind] = Math.max(take, nt);
+        }
     }
 }
